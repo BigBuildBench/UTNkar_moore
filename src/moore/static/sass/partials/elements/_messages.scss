@@ -1,0 +1,25 @@
+@import "../base";
+
+.message {
+  display: none;
+}
+
+.bocken-toast {
+  position: absolute;
+  bottom: 5px;
+  height: calc(100% - 10px);
+}
+
+.message-impl {
+  white-space: pre-wrap;
+  word-break: keep-all;
+  margin-left: 82px;
+  .bocken-toast {
+    left: 15px
+  }
+  .close {
+    float: right;
+    color: inherit;
+    line-height: 0;
+  }
+}

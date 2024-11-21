@@ -1,0 +1,42 @@
+@import "../base";
+
+.structure-header {
+    @extend .hide-on-med-and-down;
+    background-color: $primary-color;
+    height: 2.85em;
+    line-height: 1;
+    padding: 5px 0;
+
+    .committees, .sections{
+        display: flex;
+    }
+
+    #section-switch, #committee-switch{
+        height: 2.15em;
+        line-height: 2.15em;
+        flex-shrink: 0;
+        padding: 0 0.5em;
+        margin: 0 0.3em;
+    }
+
+    .sections {
+        display: none;
+    }
+    .logo {
+        margin: 0 3px;
+    }
+    .logo a{
+        display: block;
+    }
+    .left-side, .right-side {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+        height: 2.15em;
+    }
+
+    .left-side{
+        justify-content: flex-end;
+    }
+}

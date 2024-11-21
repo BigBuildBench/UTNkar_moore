@@ -1,0 +1,31 @@
+{% extends 'modeladmin/inspect.html' %}
+{% load i18n %}
+
+{% block fields_output %}
+    <dl>
+
+        <dt>{% trans 'name' %}</dt>
+        <dd>{{ instance.name }}</dd>
+
+        <dt>{% trans 'members' %}</dt>
+        <dd>
+            <ul>
+                {% for m in instance.members %}
+                    <li>{{ m }}{% if m.email or m.phone_number %} &mdash; {% if m.email %}<a href="mailto:{{ m.email }}">{{ m.email }}</a>{% endif %}{% if m.email and m.phone_number %} or {% endif %}{% if m.phone_number %}{{ m.phone_number }}{% endif %}{% endif %}</li>
+                {% empty %}
+                    {% trans 'This team currently does not contain any members.' %}
+                {% endfor %}
+            </ul>
+        </dd>
+{% comment %}
+        {% if instance.manual_members %}
+        <dt>{% trans 'manually added members' %}</dt>
+        <ul>
+            {% for m in instance.manual_members %}
+                 <li>{{ m }}{% if m.email or m.phone_number %} &mdash; {% if m.email %}<a href="mailto:{{ m.email }}">{{ m.email }}</a>{% endif %}{% if m.email and m.phone_number %} or {% endif %}{% if m.phone_number %}{{ m.phone_number }}{% endif %}{% endif %}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+{% endcomment %}
+    </dl>
+{% endblock %}

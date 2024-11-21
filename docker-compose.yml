@@ -1,0 +1,32 @@
+
+version: '3.7'
+
+services:
+    moore-db:
+      image: postgres
+      container_name: moore-db
+      volumes: 
+        - ./postgres-data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: moore
+        POSTGRES_USER: moore
+        POSTGRES_PASSWORD: moore
+      ports:
+        - "5432:5432"
+
+    moore:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      command: python src/manage.py runserver 0.0.0.0:8000
+      volumes: 
+        - .:/var/www/moore/
+      container_name: moore
+      ports:
+        - "8000:8000"
+      environment:
+        DOCKER: 'true'
+      env_file: 
+        - .env
+      depends_on:
+        - moore-db

@@ -1,0 +1,27 @@
+from wagtail.contrib.modeladmin.views import EditView
+from involvement.models import Role
+from involvement.rule_utils import is_super, is_admin
+
+
+class ApplicationEditView(EditView):
+    def get_form(self):
+        form = super(ApplicationEditView, self).get_form()
+
+        if not is_super(self.request.user) \
+                and not is_admin(self.request.user):
+            # Filter status
+            form.fields['status'].choices = form.fields['status'].choices[1:]
+            accepted_choices = ['submitted', 'approved', 'disapproved']
+            filtered_choices = []
+            for choice in form.fields['status'].choices:
+                if choice[0] in accepted_choices:
+                    filtered_choices.append(choice)
+            form.fields['status'].choices = filtered_choices
+
+            # Filter position
+            position_qs = form.fields['position'].queryset
+            roles = Role.edit_role_types_of(self.request.user)
+            position_qs = position_qs.filter(role__in=roles)
+            form.fields['position'].queryset = position_qs
+
+        return form

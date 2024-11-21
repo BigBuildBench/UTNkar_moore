@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+    <div class="error-page">
+        {% block error %}
+            <h1>{% block error_code %}{% trans 'Error' %}{% endblock %}</h1>
+            {% block video %}<iframe width="560" height="315" src="https://www.youtube.com/embed/t3otBjVZzT0" frameborder="0" allowfullscreen></iframe>{% endblock %}
+            <p>{% block error_message %}{% trans 'An error has occurred' %}{% endblock %}</p>
+        {% endblock %}
+
+        <div class="container">
+            <div class="divider"></div>
+        </div>
+
+        <a href="/" class="btn btn-secondary btn-large"><i class="material-icons">home</i> {% trans 'Return Home' %}</a>
+    </div>
+{% endblock %}

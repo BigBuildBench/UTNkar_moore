@@ -1,0 +1,30 @@
+{% extends "wagtailusers/users/edit.html" %}
+{% block fields %}
+    {% if form.separate_username_field %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.username_field %}
+    {% endif %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.name %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.email %}
+    {% block extra_fields %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.person_number %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.status %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.phone_number %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.registration_year %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.study %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.section %}
+    {% endblock extra_fields %}
+    {% if form.password1 %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.password1 %}
+    {% endif %}
+    {% if form.password2 %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.password2 %}
+    {% endif %}
+    {% if form.is_active %}
+        {% include "wagtailadmin/shared/field_as_li.html" with field=form.is_active %}
+    {% endif %}
+{% endblock fields %}
+{% block extra_head %}
+    {{ block.super }}
+    {% include "wagtailadmin/pages/_editor_css.html" %}
+    {{ form.media.css }}
+{% endblock %}

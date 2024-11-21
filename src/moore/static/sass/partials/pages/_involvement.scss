@@ -1,0 +1,84 @@
+.positions {
+  .collapsible-header {
+    padding: 0 1rem;
+    align-items: center;
+
+    img {
+      width: 45px;
+      height: 45px;
+      margin-right: .5em;
+    }
+
+    .apply {
+      text-align: right;
+      line-height: 1.5;
+      .btn {
+        margin-top: 5px;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 1.5rem;
+      }
+      .hide-on-med-and-up {
+        height: 10px;
+      }
+    }
+
+    .header-text {
+      flex: 1;
+      margin-left: 5px;
+      width: calc(100% - 225px);
+      h3 {
+        white-space: normal;
+        @extend .truncate;
+        margin: 0.8rem 0 0 0;
+      }
+      .team {
+        margin-left: 0;
+        @extend .truncate;
+        i {
+          height: 14px;
+          font-size: 20px;
+          margin-right: 5px;
+          line-height: 0.6;
+        }
+      }
+    }
+  }
+
+  .collapsible-body {
+    p {
+      margin-top: 0;
+    }
+  }
+}
+
+.position {
+    .card-title {
+        word-wrap: break-word;
+    }
+}
+
+#application-form {
+  .fab-button {
+    height: 0;
+    margin-left: 45px;
+    a {
+      height: 56px;
+    }
+  }
+  legend i {
+    line-height: 20px;
+  }
+
+  .textarea-helptext {
+    margin-bottom: 1.2em;
+  }
+
+  fieldset{
+    padding: 1em;
+  }
+
+  .reference-content {
+    padding: 1em 0 0;
+  }
+}

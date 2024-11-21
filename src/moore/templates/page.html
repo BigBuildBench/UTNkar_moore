@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block main %}
+    <div class="content-title">
+        <div class="container">
+            <h1>{% firstof page.translated_title page.title %}</h1>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "empty.html" %}
+{% load i18n materialize %}
+
+{% block title %}{% trans 'Register' %}{% endblock %}
+
+{% block heading %}{% trans 'Create a UTN account' %}{% endblock %}
+
+{% block form %}
+{% for error in form.non_field_errors %}
+    <div class="message error">{{ error }}</div>
+{% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="row">
+        
+        <div class="col s12">
+            {% materialize_field form.username 'account_circle' %}
+        </div>
+
+        <div class="col s12">
+            {% materialize_field form.email 'email' %}
+        </div>
+
+        <div class="col m6 s12">
+            {% materialize_field form.password1 'lock' %}
+        </div>
+
+        <div class="col m6 s12">
+            {% materialize_field form.password2 %}
+        </div>
+
+        <div class="col s12">
+            {% materialize_field form.person_number 'fiber_pin' %}
+        </div>
+        
+        <div class="col m6 s12">
+            {% materialize_field form.section 'account_balance' %}
+        </div>
+
+        <div class="col m6 s12">
+            {% materialize_field form.phone_number 'phone' %}
+        </div>
+    </div>
+
+    <div class="center">
+        <button type="submit" class="btn btn-primary right"><i class="material-icons">create</i>{% trans 'register' %}</button>
+    </div>
+</form>
+{#    {{ form }}#}
+{% endblock %}

@@ -1,0 +1,16 @@
+@import "../base";
+
+.block-paragraph {
+  ul {
+    padding-left: 40px;
+    &, li {
+      list-style-type: disc;
+    }
+  }
+
+  img {
+    max-width: 100%;
+	height: auto;
+	margin: 25px 0;
+  }
+}

@@ -1,0 +1,69 @@
+{% extends "involvement/base.html" %}
+{% load i18n static wagtailimages_tags involvement_tags %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'libraries/dirrty/jquery.dirrty.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/application_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dynamic_formset.js' %}"></script>
+{% endblock %}
+
+{% block involvement_content %}
+    <div class="position container">
+        <div class="row">
+            <div class="col s12 m4 push-m8">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{% if orig_logo %}{{ orig_logo.url }}{% else %}{% static 'images/logo.svg' %}{% endif %}">
+                    </div>
+                    <div class="card-content">
+                        {% if position.role.teams.count %}
+                            <span class="card-title">{{ position.role.team_names }}</span>
+                        {% else %}
+                            <h2>{% trans 'unaffiliated'|capfirst %}</h2>
+                            <p>{% trans 'This position is not affiliated with any team or committee. You answer directly to the management team and the board.' %}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-action">
+                        <a href="mailto:{{ position.role.election_email|default:'styrelsen@utn.se' }}">{% trans 'contact election official' %}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m8 pull-m4" style="overflow-wrap:anywhere">
+                <h1>{{ position }}</h1>
+                <span class="deadline" style="color: {{ position.recruitment_end|date_color }};">{% trans 'deadline'|capfirst %}: {{ position.recruitment_end }}</span>
+
+                <h2>{% trans 'role description'|title %}</h2>
+                <div>{% if position.role.description %}{{ position.role.description|linebreaks|urlize }}{% else %}{% trans 'No role description is available at this time. For more information about this position, please get in contact with us.' %}{% endif %}</div>
+
+                {% if position.comment %}
+                    <h2>{% trans 'comments for this year'|title %}</h2>
+                    <p>{{ position.comment|linebreaks }}</p>
+                {% endif %}
+            </div>
+
+            <div class="col s12">
+                {% if position.is_past_due and status == 'draft' %}
+                    <div class="card-panel primary-color white-text">
+                    {% trans 'The deadline for this application has passed.' %} {% trans 'You can no longer apply for this position.' %}
+                    </div>
+                {% elif form %}
+                    <div class="card">
+                        <div class="card-content">
+                            {% include 'involvement/application_form.html' %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="center">
+                                <h5>{% trans 'Please login to apply to this position' %}</h5>
+                                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">{% trans 'login' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

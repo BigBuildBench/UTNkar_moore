@@ -1,0 +1,17 @@
+#contact-page, .block-contacts {
+	.card {
+		height: 300px;
+		max-width: 800px;
+	}
+	.card-image {
+		width: 200px;
+		height: 100%;
+		img {
+			object-fit: cover;
+		}
+	}
+
+	.card-stacked {
+		height: 100%;
+	}
+}

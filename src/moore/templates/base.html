@@ -1,0 +1,29 @@
+{% extends 'skeleton.html' %}
+{% load branding_tags %}
+
+{% block page %}
+    <header>
+    {% block header %}
+        {% structure_header 'white' %}
+        {% block navigation %}
+            {% include 'partials/navigation.html' %}
+        {% endblock %}
+    {% endblock %}
+    </header>
+
+    <main>
+    {% block main %}
+        {% block content %}{% endblock %}
+    {% endblock %}
+    </main>
+
+    <footer>
+    {% block footer %}
+        {% include 'partials/footer.html' %}
+    {% endblock %}
+    </footer>
+{% endblock %}
+
+{% block extra_js %}
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+{% endblock %}

@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-02 16:54+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: google/apps.py:7
+msgid "Google"
+msgstr ""
+
+#: google/models.py:25
+msgid "Calendar ID as given by google calendar"
+msgstr "Kalender-ID som ges av google kalender"
+
+#: google/models.py:30
+msgid "Week"
+msgstr "Vecka"
+
+#: google/models.py:31
+msgid "Month"
+msgstr "Månad"
+
+#: google/models.py:32
+msgid "Agenda"
+msgstr "Dagordning"
+
+#: google/models.py:37
+msgid "Monday"
+msgstr "Måndag"
+
+#: google/models.py:38
+msgid "Sunday"
+msgstr "Söndag"
+
+#: google/models.py:39
+msgid "Saturday"
+msgstr "Lördag"
+
+#: google/models.py:43
+msgid "Google Calendar"
+msgstr "Google Kalender"
+
+#: google/models.py:46 google/models.py:61 google/models.py:72
+msgid "Embed"
+msgstr ""
+
+#: google/models.py:52
+msgid "List"
+msgstr "Lista"
+
+#: google/models.py:53
+msgid "Grid"
+msgstr "Rutnät"
+
+#: google/models.py:58
+msgid "Google Drive"
+msgstr ""
+
+#: google/models.py:69
+msgid "Google Form"
+msgstr ""
+
+#: google/models.py:99
+msgid "English description"
+msgstr ""
+
+#: google/models.py:103
+msgid "Swedish description"
+msgstr ""
+
+#: google/models.py:136
+msgid "Form deadline"
+msgstr ""
+
+#: google/models.py:161
+msgid "Common"
+msgstr ""
+
+#: google/models.py:162
+msgid "English"
+msgstr "Engelska"
+
+#: google/models.py:163
+msgid "Swedish"
+msgstr "Svenska"
+
+#: google/models.py:165
+msgid "Settings"
+msgstr "Inställningar"
+
+#: google/templates/google/google_form_page.html:9
+msgid ""
+"The deadline for this form has passed. Results might be posted here at a "
+"later date."
+msgstr ""
+"Deadline för denna blankett har gått. Resultat kan visas här på ett senare "
+"datum"

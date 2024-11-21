@@ -1,0 +1,82 @@
+{% extends "involvement/base.html" %}
+{% load i18n static wagtailroutablepage_tags wagtailimages_tags involvement_tags %}
+
+{% block involvement_content %}
+<div class="positions container">
+    <h1>{% trans 'open positions'|title %}</h1>
+    {% if positions %}
+        <ul class="collapsible popout" data-collapsible="expandable">
+        {% for pos in positions|dictsort:'recruitment_end' %}
+            <li>
+                <div class="collapsible-header">
+                    {% if pos.role.team_logo is not None %}
+                        {% image pos.role.team_logo fill-45x45 class=circle%}
+                    {% else %}
+                        <img class="circle" src="{% static 'images/bocken.svg' %}">
+                    {% endif %}
+                    <div class="header-text">
+                        <h3>{{ pos }}</h3>
+                        <div class="hide-on-med-and-up">
+                            <b style="color: {{ pos.recruitment_end|date_color }};">
+                                {% trans 'deadline'|capfirst %}:
+                                {% language 'sv' %}
+                                {{ pos.recruitment_end|date:"SHORT_DATE_FORMAT" }}
+                                {% endlanguage %}
+                            </b>
+                        </div>
+                        <div class="team">
+                            {% if pos.role.teams.count %}
+                                <i class="material-icons">group</i>{{ pos.role.team_names }}
+                            {% else %}
+                                <i class="material-icons">person</i>{% trans 'unaffiliated'|capfirst %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="apply hide-on-small-and-down">
+                        <a class="btn" href="{% routablepageurl page 'position' pos.id  %}">{% trans 'apply' %}</a><br>
+                        <div class="hide-on-small-only"><b style="color: {{ pos.recruitment_end|date_color }};">
+                            {% trans 'deadline'|capfirst %}:
+                            {% language 'sv' %}
+                            {{ pos.recruitment_end|date:"SHORT_DATE_FORMAT" }}
+                            {% endlanguage %}</b></div>
+                    </div>
+                </div>
+                <div class="collapsible-body">
+                    <b>{% trans 'Term of office' %}: </b>
+                    <span>{{ pos.term_from }} &mdash; {{ pos.term_to }}</span><br>
+
+                    {% if pos.role.description %}
+                    <b>{% trans 'role description'|title %}:</b>
+                    <p>{{ pos.role.description|truncatechars:600 }}
+                        {% if pos.role.description|length > 600 %}
+                        <a href="{% routablepageurl page 'position' pos.id %}">
+                            {% trans 'Read more' %}
+                        </a>
+                        {% endif %}
+                    </p>
+                    {% endif %}
+
+                    {% if pos.comment %}
+                    <b>{% trans 'comments for this year'|title %}:</b>
+                    <p>
+                        {{ pos.comment|truncatechars:600 }}
+                        {% if pos.role.description|length > 600 %}
+                        <a href="{% routablepageurl page 'position' pos.id  %}">
+                            {% trans 'Read more' %}
+                        </a>
+                        {% endif %}
+                    </p>
+                    {% endif %}
+
+                    <div class="apply hide-on-med-and-up" style="text-align: center">
+                        <a class="btn" href="{% routablepageurl page 'position' pos.id  %}">{% trans 'apply' %}</a><br>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <div class="card-panel primary-color white-text">{% trans 'There are currently no open positions. Check back later!' %}</div>
+    {% endif %}
+</div>
+{% endblock %}

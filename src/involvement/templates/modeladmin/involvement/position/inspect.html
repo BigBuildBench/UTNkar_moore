@@ -1,0 +1,77 @@
+{% extends 'modeladmin/inspect.html' %}
+{% load i18n %}
+
+{% block fields_output %}
+    <dl class="position-involvement">
+        <dt>{% trans 'position' %}</dt>
+        <dd>{{ instance }}</dd>
+
+        <dt>{% trans 'Appointed applicants' %}</dt>
+        <dd>
+            <ul>
+                {% for a in appointed_applications %}
+                    <li>
+                        <div>
+                            <b>{% trans 'name' %}:</b> {{ a.applicant.get_full_name|default:'-' }}
+                        </div>
+                        <div>
+                            <b>{% trans 'email' %}:</b> {% if a.applicant.email %}
+                                <a href="mailto:{{ a.applicant.email }}">{{ a.applicant.email }}</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                        <div>
+                            <b>{% trans 'phone_number' %}:</b> {% if a.applicant.phone_number %}
+                                <a href="tel:{{ a.applicant.phone_number }}">{{ a.applicant.phone_number }}</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                        <div>
+                            <b>{% trans 'section' %}:</b> {{ a.applicant.section|default:'-' }}
+                        </div>
+                    </li>
+                {% empty %}
+                    {% trans 'No applications have been submitted for this position.' %}
+                {% endfor %}
+            </ul>
+        </dd>
+
+        <dt>{% trans 'submitted applications' %}</dt>
+        <dd>
+            <ul>
+                {% for a in submitted_applications %}
+                    <li class="application">
+                        <div class="application-content">
+                            <b>{{ a.get_status_display }}:</b>
+                            <div>
+                                <b>{% trans 'name' %}:</b> {{ a.applicant.get_full_name|default:'-' }}
+                            </div>
+                            <div>
+                                <b>{% trans 'email' %}:</b> {% if a.applicant.email %}
+                                    <a href="mailto:{{ a.applicant.email }}">{{ a.applicant.email }}</a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </div>
+                            <div>
+                                <b>{% trans 'phone_number' %}:</b> {% if a.applicant.phone_number %}
+                                    <a href="tel:{{ a.applicant.phone_number }}">{{ a.applicant.phone_number }}</a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </div>
+                            <div>
+                                <b>{% trans 'section' %}:</b> {{ a.applicant.section|default:'-' }}
+                            </div>
+                        </div>
+                        <a target="blank" href="/admin/involvement/application/inspect/{{a.id}}/" class="button application-inspect button-small button-secondary" title="{% trans 'See application' %}">{% trans 'See application' %}</a>
+                    </li>
+                {% empty %}
+                    {% trans 'No applications have been submitted for this position.' %}
+                {% endfor %}
+            </ul>
+        </dd>
+    </dl>
+{% endblock %}

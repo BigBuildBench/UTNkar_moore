@@ -1,0 +1,169 @@
+{% load i18n wagtailroutablepage_tags materialize membertags %}
+
+<h2 id="apply">{% trans 'apply now!'|title %}</h2>
+
+{% for error in form.non_field_errors %}
+    <div class="message error">{{ error }}</div>
+{% endfor %}
+{% for form in reference_forms %}
+    {% for error in form.non_field_errors %}
+        <div class="message error">{{ error }}</div>
+    {% endfor %}
+{% endfor %}
+
+{% if position.is_past_due %}
+<div class="alert alert-info" role="alert">
+    {% trans 'The deadline for this application has passed.' %} {% trans 'You can no longer change your application.' %}
+</div>
+{% endif %}
+
+
+
+<form id="application-form" method="post" action="{% routablepageurl page 'position' position.id  %}#apply">
+    {% csrf_token %}
+    <fieldset>
+        <legend>
+            <i class="material-icons">person</i>
+            {% trans 'member information'|title %}
+        </legend>
+		<div class="row">
+            <div class="col">
+        	    {% trans 'membership status'|title %}: {% status_badge request.user membership_status %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col l4 m6">
+                <div class="input-field">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email" type="text" placeholder="{{ email }}" readonly>
+                    <label for="email">{% trans 'email' %}</label>
+                </div>
+            </div>
+            <div class="col l4 m6">
+                <div class="input-field">
+                    <i class="material-icons prefix">phone</i>
+                    <input id="phone" type="text" placeholder="{{ phone }}" readonly>
+                    <label for="phone">{% trans 'Phone number' %}</label>
+                </div>
+            </div>
+            <div class="col l4 m6">
+                <div class="input-field">
+                    <i class="material-icons prefix">school</i>
+                    <input id="study" type="text" placeholder="{{ request.user.section }}" readonly>
+                    <label for="study">{% trans 'section' %}</label>
+                </div>
+            </div>
+            <div class="fab-button col s12">
+                <a class="btn-floating btn-large btn-primary right" href="{% url 'profile' %}">
+                    <i class="material-icons">edit</i>
+                </a>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            <i class="material-icons">assignment_ind</i>
+            {{ form.cover_letter.label|title }}
+        </legend>
+
+        <p class="textarea-helptext">{{ form.cover_letter.help_text }}</p>
+
+        <div class="input-field">
+            <textarea
+                id="{{ form.cover_letter.auto_id }}"
+                name="{{ form.cover_letter.name }}"
+                type="text"
+                {% if status == 'submitted' %} readonly {% endif %}
+                class="materialize-textarea{% if form.cover_letter.errors %} invalid{% endif %}"
+                >{{ form.data.cover_letter|default:form.cover_letter.initial }}</textarea>
+            <label for="{{ form.cover_letter.auto_id }}">{{ form.cover_letter.label}}</label>
+            {% if form.cover_letter.errors %}{% include 'materialize/form/field_errors.html' %}{% endif %}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            <i class="material-icons">assignment</i>
+            {{ form.qualifications.label|title }}
+        </legend>
+
+        <p class="textarea-helptext">{{ form.qualifications.help_text }}</p>
+
+        <div class="input-field">
+            <textarea
+                id="{{ form.qualifications.auto_id }}"
+                name="{{ form.qualifications.name }}"
+                type="text"
+                {% if status == 'submitted' %} readonly {% endif %}
+                class="materialize-textarea{% if form.qualifications.errors %} invalid{% endif %}"
+                >{{ form.data.qualifications|default:form.qualifications.initial }}</textarea>
+            <label for="{{ form.qualifications.auto_id }}">{{ form.qualifications.label }}</label>
+            {% if form.qualifications.errors %}{% include 'materialize/form/field_errors.html' %}{% endif %}
+        </div>
+    </fieldset>
+
+    {{ reference_forms.management_form }}
+    <fieldset>
+        <legend><i class="material-icons">recent_actors</i> {% trans 'references'|title %}</legend>
+
+        <div id="formset-container" class="row">
+            {% for form in reference_forms %}
+                {% include 'involvement/reference_form.html' with number=forloop.counter0 %}
+            {% endfor %}
+        </div>
+
+        {% if status == 'draft' %}
+            <div class="col s12 fab-button">
+                <a id="add" class="btn-floating btn-large btn-primary right" href="{% url 'profile' %}"><i class="material-icons">add</i></a>
+            </div>
+        {% endif %}
+    </fieldset>
+
+    <fieldset>
+      <legend><i class="material-icons">gavel</i>{{ form.gdpr.label|title|upper }}</legend>
+      <div class="form-check">
+        <input 
+          id="{{ form.gdpr.auto_id }}"
+          name="{{ form.gdpr.name }}"
+          type="checkbox" 
+          {% if status == 'submitted' %} readonly {% endif %}
+          {% if form.gdpr.initial %} checked {% endif %}
+          class="filled-in"
+          required>
+          <label for="{{ form.gdpr.auto_id }}">{{ form.gdpr.help_text }}</label>
+        <label><a href="https://www.utn.se/about-union/document-archive/">https://www.utn.se/about-union/document-archive/</a></label>
+      </div>
+    </fieldset>
+
+    {% if not position.is_past_due %}
+    <div class="col s12">
+        {% if status == 'draft' %}
+            <button id="submit" name="{{ form.status.name }}" type="submit" class="save btn btn-inverse disabled" value="draft">{% trans 'save as draft' %}</button>
+            <button type="button" class="save btn btn-primary modal-trigger" data-target="application-form-save-modal">{% trans 'apply' %}</button>
+        {% endif %}
+    </div>
+    {% endif %}
+
+
+    <div id="application-form-save-modal" class="modal">
+        <div class="modal-content">
+            <p>När du har skickat in din ansökan kan du inte ändra den. Om du vill göra ändringar kan du spara ett utkast av din ansökan! Vill du skicka in din ansökan?</p>
+            </br>
+            <button name="{{ form.status.name }}" type="submit" value="submitted" data-target="application-form-save-modal" class="btn btn-primary modal-close">Ja</button>
+            <button data-target="application-form-save-modal" class="btn btn-inverse modal-close">Nej</button>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    //Trigger a resize if there is a lot of text in the textareas
+    window.addEventListener("load", function(){
+        $('#{{ form.cover_letter.auto_id }}').trigger('autoresize');
+        $('#{{ form.qualifications.auto_id }}').trigger('autoresize');
+    });
+</script>
+<script type="text/html" id="formset-template">
+    {% include 'involvement/reference_form.html' with form=reference_forms.empty_form number='__prefix__' %}
+</script>

@@ -1,0 +1,49 @@
+{% extends "involvement/base.html" %}
+{% load i18n %}
+
+{% block involvement_content %}
+    <div class="container">
+        {% if drafts %}
+            <h2>{% trans 'drafted applications'|title %}</h2>
+            <div class="row">
+                {% for a in drafts %}
+                    {% include 'involvement/application_summary.html' with application=a edit=True color='primary' %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if submitted %}
+            <h2>{% trans 'submitted applications'|title %}</h2>
+            <div class="row">
+                {% for a in submitted %}
+                    {% include 'involvement/application_summary.html' with application=a %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if waiting %}
+            <h2>{% trans 'waiting applications'|title %}</h2>
+            <div class="row">
+                {% for a in waiting %}
+                    {% include 'involvement/application_summary.html' with application=a %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if not drafts and not submitted and not waiting and not old %}
+            <h2>{% trans 'submitted applications'|title %}</h2>
+            <div class="card-panel primary-color white-text">
+                {% trans 'You currently do not have any submitted applications.' %}
+            </div>
+        {% endif %}
+
+        {% if old %}
+            <h2>{% trans 'submitted applications'|title %}</h2>
+            <div class="row">
+                {% for a in old %}
+                    {% include 'involvement/application_summary.html' with application=a color='secondary' %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
